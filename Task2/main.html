@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Centered Box</title>
+        <link rel="stylesheet" href="stylesheet.css">
+    </head>
+    <body>
+        <div class="box">
+            <div class="timerbox">
+                <h5 class="timer">0:00</h5>
+                <h3 class="lap-time">lap time : 0:00 </h1>
+            </div>
+            <div class="buttonsboxes" >
+                <button class="bottun-func" id = '101' onclick="Start()">Start</button>
+                <button class="bottun-func" onclick="Pause()">Pause</button>
+                <button class="bottun-func" onclick="Restart()">Restart</button>
+                <button class="bottun-func" onclick="Relap()">Relap</button>
+            </div>
+        </div>
+        <script>
+            let counter = 0;
+            let Start_button = document.getElementById('101');
+            let timer_text = document.getElementsByClassName('timer')[0];
+            let cond = true;
+            let lap_text = document.getElementsByClassName("lap-time")[0];
+            let intervalId; // Declare intervalId in the global scope
+    
+            function Start() {
+                cond = true;
+                if (cond === false) {
+                    return; 
+                } else {
+                    Start_button.disabled = true; 
+                    intervalId = setInterval(() => {
+                    counter += 1; 
+                    let minutes = Math.floor(counter / 60); 
+                    let seconds = counter % 60; 
+                    timer_text.innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                    }, 1000);
+                }
+            }
+    
+            function Pause() {
+                clearInterval(intervalId); 
+                cond = false; 
+                Start_button.disabled = false; 
+            }
+
+            function Restart() {
+                clearInterval(intervalId); 
+                counter = 0;
+                timer_text.innerHTML = `0:00`;
+                Start_button.disabled = false; 
+
+            }
+
+            function Relap() {
+                lap_text.innerHTML = `lap time : ${timer_text.innerHTML}`
+        
+            }
+        </script>
+    </body>
+</html>
